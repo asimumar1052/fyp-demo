@@ -1,0 +1,125 @@
+Perfect — thanks for the clarification. Since **fact-checking is handled separately**, then the role of **sentiment analysis** in your tweet analyzer should shift focus from truth detection to **understanding communication dynamics**, such as:
+
+---
+
+## ✅ What Sentiment Analysis *Should* Do in This Case
+
+Instead of verifying facts, your sentiment module should aim to **contextualize** the tweet in ways that help the fact-checker or downstream systems prioritize, categorize, or assess **intent, tone, and risk**.
+
+---
+
+## 🎯 Goals of Sentiment Analysis (when Fact Checking is Separate)
+
+### 1. **Gauge Author’s Emotional Tone**
+
+Helps you understand:
+
+* Is the user upset? Alarmed? Excited?
+* Are they promoting panic, outrage, or sarcasm?
+
+🔹 Use Case: High-negative, angry tweets might require more caution or priority in moderation.
+
+---
+
+### 2. **Detect Polarizing or Manipulative Language**
+
+Sentiment can flag tweets that are:
+
+* Emotionally charged
+* Meant to provoke or persuade
+* Polarizing (often found in misinformation, but also in legitimate activism)
+
+🔹 Use Case: Route high-emotion tweets to specialized moderation or analysis queues.
+
+---
+
+### 3. **Contextualize Topics with Sentiment**
+
+If a tweet mentions entities (e.g., "WHO", "Biden", "Israel", "climate change"), determine **how** they’re being framed emotionally.
+
+🔹 Use Case: A fact-checked tweet about “vaccines” with negative tone toward “WHO” may still spread doubt even if technically factual.
+
+---
+
+### 4. **Support Risk Assessment Models**
+
+Sentiment can feed into a scoring model that estimates:
+
+* Virality potential (high-emotion content spreads faster)
+* Harm potential (angry or sarcastic tweets might be misleading)
+
+---
+
+### 5. **Surface Sarcasm and Ambiguity**
+
+Sarcastic tweets may:
+
+* Contradict their literal meaning
+* Undermine real facts with humor
+
+🔹 Use Case: Sentiment analysis flags sarcasm → fact checker avoids misclassifying tone.
+
+---
+
+### 6. **Content Typing: Informational vs. Emotional**
+
+Sentiment helps categorize content types:
+
+| Tweet Type         | Likely Sentiment Traits            |
+| ------------------ | ---------------------------------- |
+| Informational      | Neutral tone, low subjectivity     |
+| Opinionated        | High subjectivity, mixed sentiment |
+| Conspiratorial     | High negativity, anger, sarcasm    |
+| Satirical/parody   | Positive or sarcastic              |
+| Aggressive/blaming | Negative, high polarity            |
+
+---
+
+## 🧠 What You Might Include in Sentiment Output
+
+Here’s a **refined sentiment output schema** for your use case:
+
+```json
+{
+  "overall_sentiment": "negative",
+  "polarity": -0.65,
+  "subjectivity": 0.92,
+  "emotion": {
+    "anger": 0.78,
+    "disgust": 0.42,
+    "fear": 0.25
+  },
+  "sarcasm_detected": true,
+  "toxicity_likelihood": 0.63,
+  "intended_tone": "provocative",
+  "entity_sentiments": {
+    "WHO": "negative",
+    "vaccines": "neutral"
+  },
+  "content_type": "opinionated"
+}
+```
+
+This output doesn’t fact-check, but it *describes the tweet’s tone, intent, and emotional weight* — useful to prioritize, flag, or interpret the post.
+
+---
+
+## 🚧 What You *Don’t* Need in Sentiment
+
+Since fact-checking is handled separately:
+
+* ✅ You **don’t** need to compare content against facts.
+* ✅ You **don’t** need to determine if a tweet is “true” or “false.”
+* ✅ You **don’t** need to resolve real-world references.
+
+Just capture **how it's being said** — not **whether it's correct**.
+
+---
+
+## Would You Like?
+
+* A small **demo classifier** (Python-based) for this kind of sentiment output?
+* Guidance on **training your own** tweet-focused sentiment model?
+* Open-source tools (like VADER, TextBlob, BERT) tailored for this task?
+
+Let me know how deep you want to go!
