@@ -24,3 +24,5 @@ class TweetResponse(BaseModel):
     author: Optional[Author] = None
     media: Optional[Dict] = None
     sentiment: Optional[Dict[str, float | str]] = None
+    fact_check_trigger: Optional[Dict[str, float | str]] = None
+    fake_news_detection: Optional[Dict[str, float | str]] = None
